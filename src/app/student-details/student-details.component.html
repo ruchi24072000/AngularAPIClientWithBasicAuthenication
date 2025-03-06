@@ -1,0 +1,134 @@
+<!-- View Mode -->
+<div *ngIf="viewMode; else editMode">
+  <div *ngIf="currentStudent && currentStudent.fullName; else noStudentSelected">
+    <h4 class="text-center mb-4">Student Details</h4>
+    <div class="card p-4">
+      <div class="row">
+        <!-- Photo Display -->
+        <div class="col-md-4 text-center">
+          <img *ngIf="studentImageUrl" 
+               [src]="studentImageUrl"
+               alt="Student Photo"
+               class="img-thumbnail mb-3"
+               style="max-width: 150px;">
+        </div>
+
+        <!-- Details Display -->
+        <div class="col-md-8">
+          <div class="row mb-2">
+            <label class="col-sm-4"><strong>Name:</strong></label>
+            <div class="col-sm-8">{{ currentStudent.fullName }}</div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-sm-4"><strong>Mobile No:</strong></label>
+            <div class="col-sm-8">{{ currentStudent.mobileNo }}</div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-sm-4"><strong>Email:</strong></label>
+            <div class="col-sm-8">{{ currentStudent.email }}</div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-sm-4"><strong>Date Of Birth:</strong></label>
+            <div class="col-sm-8">{{ currentStudent.dateOfBirth | date:'dd-MM-yyyy' }}</div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-sm-4"><strong>State:</strong></label>
+            <div class="col-sm-8">{{ currentStudent.state }}</div>
+          </div>
+          <div class="row mb-2">
+            <label class="col-sm-4"><strong>District:</strong></label>
+            <div class="col-sm-8">{{ currentStudent.district }}</div>
+          </div>
+          <div class="text-center mt-3">
+            <button class="btn btn-warning" (click)="toggleEditMode()">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Student selected message -->
+  <ng-template #noStudentSelected>
+    <p class="text-center">Please click on a Student...</p>
+  </ng-template>
+</div>
+
+<!-- Edit Mode -->
+<ng-template #editMode>
+  <div *ngIf="currentStudent && currentStudent.fullName; else noStudentAccess">
+    <div class="card p-4">
+      <h4 class="text-center mb-4">Edit Student</h4>
+      <form [formGroup]="studentForm" (ngSubmit)="updateStudent()">
+        <div class="row">
+          <!-- Photo Display and Upload -->
+          <div class="col-md-4 text-center">
+            <img *ngIf="studentImageUrl" 
+                 [src]="studentImageUrl"
+                 alt="Student Photo"
+                 class="img-thumbnail mb-3"
+                 style="max-width: 150px;">
+            <div>
+              <label for="photoUpload">Upload New Photo</label>
+              <input type="file" class="form-control" id="photoUpload" (change)="onFileSelected($event)" />
+            </div>
+          </div>
+
+          <!-- Form Fields for Editing -->
+          <div class="col-md-8">
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Name</label>
+              <div class="col-sm-8">
+                <input id="fullName" type="text" formControlName="fullName" class="form-control" required />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Mobile No</label>
+              <div class="col-sm-8">
+                <input id="mobileNo" type="text" formControlName="mobileNo" class="form-control" required />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Email</label>
+              <div class="col-sm-8">
+                <input id="email" type="email" formControlName="email" class="form-control" required />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Date Of Birth</label>
+              <div class="col-sm-8">
+                <input id="dateOfBirth" type="date" formControlName="dateOfBirth" class="form-control" required />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">State</label>
+              <div class="col-sm-8">
+                <input id="state" type="text" formControlName="state" class="form-control" required />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">District</label>
+              <div class="col-sm-8">
+                <input id="district" type="text" formControlName="district" class="form-control" required />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-success mx-2" [disabled]="studentForm.invalid">Update</button>
+          <button type="button" class="btn btn-danger mx-2" (click)="deleteStudent()">Delete</button>
+          <button type="button" class="btn btn-secondary mx-2" (click)="toggleEditMode()">Cancel</button>
+        </div>
+
+        <!-- Message Display -->
+        <p *ngIf="message" class="text-center mt-3 text-success">{{ message }}</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- No access message -->
+  <ng-template #noStudentAccess>
+    <p class="text-center">Cannot access this Student...</p>
+  </ng-template>
+</ng-template>

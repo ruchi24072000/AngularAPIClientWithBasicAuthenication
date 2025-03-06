@@ -1,0 +1,56 @@
+.student-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+  }
+  
+  .student-table th, .student-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .student-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .student-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .student-details-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+  }
+  
+  .student-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .student-image {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+  .student-table tr.active {
+    background-color: #f0f8ff; /* Light blue highlight */
+  }
+  

@@ -1,0 +1,32 @@
+<table class="student-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of Students; let i = index" 
+        (click)="setActiveStudent(student, i)"
+        [class.active]="currentStudent?.id === student.id">
+      <td>{{ student.fullName }}</td>
+      <td>
+        <button>
+          {{ isDetailsVisible(student.id) ? 'Hide' : 'View' }} Details
+        </button>
+      </td>
+    </tr>
+
+    <!-- Expandable Row for Student Details -->
+    <tr *ngIf="isDetailsVisible(currentStudent?.id)">
+      <td colspan="2">
+        <app-student-details 
+          [currentStudent]="currentStudent" 
+          (studentUpdated)="onStudentUpdated($event)"
+          (studentDeleted)="onStudentDeleted($event)">
+          [viewMode]="true">
+        </app-student-details>
+      </td>
+    </tr>
+  </tbody>
+</table>
